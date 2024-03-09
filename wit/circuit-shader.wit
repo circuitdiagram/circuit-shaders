@@ -1,0 +1,158 @@
+package circuit-diagram:shaders;
+
+interface circuit-common {
+  record point {
+    x: float64,
+    y: float64,
+  }
+
+  enum orientation {
+    horizontal,
+    vertical,
+  }
+
+  resource geometry-context {
+  }
+
+  record circuit-node {
+    element: circuit-element,
+  }
+
+  variant circuit-element {
+    document-circuit-element,
+    wire-circuit-element(wire-circuit-element),
+    connection-circuit-element(connection-circuit-element),
+    component-circuit-element(component-circuit-element),
+  }
+
+  record wire-circuit-element {
+    segments: list<line-segment>
+  }
+
+  record line-segment {
+    start: point,
+    end: point,
+  }
+
+  record connection-circuit-element {
+    location: point,
+    visible: bool,
+  }
+
+  record component-circuit-element {
+    layout: circuit-element-layout
+  }
+
+  record circuit-element-layout {
+    location: point,
+    size: float64,
+    orientation: orientation,
+  }
+
+  variant geometry-item {
+    line-geometry(line-geometry),
+    rectangle-geometry(rectangle-geometry),
+    ellipse-geometry(ellipse-geometry),
+    path-geometry(path-geometry),
+    text-geometry(text-geometry),
+  }
+
+  record line-geometry {
+    start: point,
+    end: point,
+    stroke-thickness: float64,
+    stroke-style: option<geometry-style>,
+  }
+
+  record rectangle-geometry {
+    x: float64,
+    y: float64,
+    width: float64,
+    height: float64,
+    stroke-thickness: float64,
+    stroke-style: option<geometry-style>,
+    fill-style: option<geometry-style>,
+  }
+
+  record ellipse-geometry {
+    center-x: float64,
+    center-y: float64,
+    radius-x: float64,
+    radius-y: float64,
+    stroke-thickness: float64,
+    stroke-style: option<geometry-style>,
+    fill-style: option<geometry-style>,
+  }
+
+  record path-geometry {
+    start: point,
+    commands: string,
+    stroke-thickness: float64,
+    stroke-style: option<geometry-style>,
+    fill-style: option<geometry-style>,
+  }
+
+  record text-geometry {
+    anchor: point,
+    alignment: text-alignment,
+    rotation: float64,
+    text-runs: list<text-run>,
+    stroke-thickness: float64,
+    stroke-style: option<geometry-style>,
+    fill-style: option<geometry-style>,
+  }
+
+  variant text-alignment {
+    top-left,
+    top-centre,
+    top-right,
+    centre-left,
+    centre-centre,
+    centre-right,
+    bottom-left,
+    bottom-centre,
+    bottom-right
+  }
+
+  record text-run {
+    text: string,
+    formatting: text-run-formatting,
+  }
+
+  record text-run-formatting {
+    size: float64,
+    formatting-type: text-run-formatting-type,
+  }
+
+  variant text-run-formatting-type {
+    normal,
+    subscript,
+    superscript,
+  }
+
+  variant geometry-style {
+    solid-color(solid-color-style)
+  }
+
+  record solid-color-style {
+    color: geometry-color
+  }
+
+  record geometry-color {
+    a: u8,
+    r: u8,
+    g: u8,
+    b: u8,
+  }
+}
+
+interface geometry-shader {
+  use circuit-common.{circuit-node, geometry-item};
+
+  transform: func(circuit-node: circuit-node, geometry: list<geometry-item>) -> list<geometry-item>;
+}
+
+world circuit-shader {
+  import circuit-common;
+  export geometry-shader;
+}
