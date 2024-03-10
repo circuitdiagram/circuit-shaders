@@ -1,6 +1,9 @@
 package circuit-diagram:shaders;
 
 interface circuit-common {
+
+  /* Common */
+
   record point {
     x: float64,
     y: float64,
@@ -11,18 +14,40 @@ interface circuit-common {
     vertical,
   }
 
-  resource geometry-context {
+  record color {
+    r: u8,
+    g: u8,
+    b: u8,
+    a: u8,
   }
+
+  /* Circuit */
 
   record circuit-node {
     element: circuit-element,
+    effects: node-effects,
+  }
+
+  record node-effects {
+    color: option<color>,
   }
 
   variant circuit-element {
-    document-circuit-element,
+    document-circuit-element(document-circuit-element),
+    group-circuit-element,
     wire-circuit-element(wire-circuit-element),
     connection-circuit-element(connection-circuit-element),
     component-circuit-element(component-circuit-element),
+  }
+
+  record document-circuit-element {
+    canvas-bounds: layout-rect,
+    content-bounds: layout-rect,
+  }
+
+  record layout-rect {
+    top-left: point,
+    bottom-right: point,
   }
 
   record wire-circuit-element {
@@ -48,6 +73,8 @@ interface circuit-common {
     size: float64,
     orientation: orientation,
   }
+
+  /* Geometry */
 
   variant geometry-item {
     line-geometry(line-geometry),
@@ -135,14 +162,7 @@ interface circuit-common {
   }
 
   record solid-color-style {
-    color: geometry-color
-  }
-
-  record geometry-color {
-    a: u8,
-    r: u8,
-    g: u8,
-    b: u8,
+    color: color
   }
 }
 

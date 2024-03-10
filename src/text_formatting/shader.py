@@ -34,9 +34,7 @@ def adjust_geometry(geom: circuit_common.GeometryItem):
         ]
         if len(geom.value.text_runs) != len1:
             geom.value.fill_style = circuit_common.GeometryStyle(
-                circuit_common.SolidColorStyle(
-                    circuit_common.GeometryColor(255, 20, 20, 200)
-                )
+                circuit_common.SolidColorStyle(circuit_common.Color(255, 20, 20, 200))
             )
     return geom
 

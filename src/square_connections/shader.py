@@ -33,7 +33,7 @@ class GeometryShader(exports.GeometryShader):
                     None,
                     circuit_common.GeometryStyle(
                         circuit_common.SolidColorStyle(
-                            circuit_common.GeometryColor(255, 0, 0, 0)
+                            circuit_common.Color(255, 0, 0, 0)
                         )
                     ),
                 )
