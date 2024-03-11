@@ -9,8 +9,8 @@ class GeometryShader(exports.GeometryShader):
     def transform(
         self,
         circuit_node: circuit_common.CircuitNode,
-        geometry: List[circuit_common.GeometryItem],
-    ) -> List[circuit_common.GeometryItem]:
+        geometry: List[circuit_common.GeometryElement],
+    ) -> List[circuit_common.GeometryElement]:
         # Only match connection elements that Cirucit Diagram has determined
         # should be visible.
         if (
@@ -23,20 +23,23 @@ class GeometryShader(exports.GeometryShader):
             connection = circuit_node.element.value
 
             # Create a square with the centre at the connection point.
-            square_connection = circuit_common.GeometryItemRectangleGeometry(
-                circuit_common.RectangleGeometry(
-                    connection.location.x - CONNECTION_SIZE / 2.0,
-                    connection.location.y - CONNECTION_SIZE / 2.0,
-                    CONNECTION_SIZE,
-                    CONNECTION_SIZE,
-                    0.0,
-                    None,
-                    circuit_common.GeometryStyle(
-                        circuit_common.SolidColorStyle(
-                            circuit_common.Color(255, 0, 0, 0)
-                        )
-                    ),
-                )
+            square_connection = circuit_common.GeometryElement(
+                circuit_common.GeometryItemRectangleGeometry(
+                    circuit_common.RectangleGeometry(
+                        connection.location.x - CONNECTION_SIZE / 2.0,
+                        connection.location.y - CONNECTION_SIZE / 2.0,
+                        CONNECTION_SIZE,
+                        CONNECTION_SIZE,
+                        0.0,
+                        None,
+                        circuit_common.GeometryStyle(
+                            circuit_common.SolidColorStyle(
+                                circuit_common.Color(0, 0, 0, 255)
+                            )
+                        ),
+                    )
+                ),
+                circuit_common.GeometryFlags(0),
             )
 
             # Render just the square. Any existing geometry associated with this

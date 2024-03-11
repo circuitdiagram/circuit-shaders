@@ -76,12 +76,21 @@ interface circuit-common {
 
   /* Geometry */
 
+  record geometry-element {
+    geometry: geometry-item,
+    modifiers: geometry-flags,
+  }
+
   variant geometry-item {
     line-geometry(line-geometry),
     rectangle-geometry(rectangle-geometry),
     ellipse-geometry(ellipse-geometry),
     path-geometry(path-geometry),
     text-geometry(text-geometry),
+  }
+
+  flags geometry-flags {
+    background
   }
 
   record line-geometry {
@@ -167,9 +176,9 @@ interface circuit-common {
 }
 
 interface geometry-shader {
-  use circuit-common.{circuit-node, geometry-item};
+  use circuit-common.{circuit-node, geometry-element};
 
-  transform: func(circuit-node: circuit-node, geometry: list<geometry-item>) -> list<geometry-item>;
+  transform: func(circuit-node: circuit-node, geometry: list<geometry-element>) -> list<geometry-element>;
 }
 
 world circuit-shader {

@@ -17,8 +17,8 @@ class GeometryShader(exports.GeometryShader):
     def transform(
         self,
         circuit_node: circuit_common.CircuitNode,
-        geometry: List[circuit_common.GeometryItem],
-    ) -> List[circuit_common.GeometryItem]:
+        geometry: List[circuit_common.GeometryElement],
+    ) -> List[circuit_common.GeometryElement]:
         if isinstance(
             circuit_node.element, circuit_common.CircuitElementDocumentCircuitElement
         ):
@@ -26,14 +26,14 @@ class GeometryShader(exports.GeometryShader):
         return geometry
 
 
-def adjust_geometry(geom: circuit_common.GeometryItem):
-    if isinstance(geom, circuit_common.GeometryItemTextGeometry):
-        len1 = len(geom.value.text_runs)
-        geom.value.text_runs = [
-            x for run in geom.value.text_runs for x in format_text(run)
+def adjust_geometry(geom: circuit_common.GeometryElement):
+    if isinstance(geom.geometry, circuit_common.GeometryItemTextGeometry):
+        len1 = len(geom.geometry.value.text_runs)
+        geom.geometry.value.text_runs = [
+            x for run in geom.geometry.value.text_runs for x in format_text(run)
         ]
-        if len(geom.value.text_runs) != len1:
-            geom.value.fill_style = circuit_common.GeometryStyle(
+        if len(geom.geometry.value.text_runs) != len1:
+            geom.geometry.value.fill_style = circuit_common.GeometryStyle(
                 circuit_common.SolidColorStyle(circuit_common.Color(255, 20, 20, 200))
             )
     return geom

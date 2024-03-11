@@ -11,9 +11,9 @@ class GeometryShader(exports.GeometryShader):
     def transform(
         self,
         circuit_node: circuit_common.CircuitNode,
-        geometry: List[circuit_common.GeometryItem],
-    ) -> List[circuit_common.GeometryItem]:
-        # The document node is the top-level node. Continue until
+        geometry: List[circuit_common.GeometryElement],
+    ) -> List[circuit_common.GeometryElement]:
+        # The `document` node is the top-level node. Continue until
         # this node is reached to do all the color conversion at once.
         if not isinstance(
             circuit_node.element,
@@ -26,34 +26,37 @@ class GeometryShader(exports.GeometryShader):
         # Add a dark background, and convert the style of each
         # element to the dark theme.
         return [
-            circuit_common.GeometryItemRectangleGeometry(
-                circuit_common.RectangleGeometry(
-                    document.canvas_bounds.top_left.x,
-                    document.canvas_bounds.top_left.y,
-                    document.canvas_bounds.bottom_right.x
-                    - document.canvas_bounds.top_left.x,
-                    document.canvas_bounds.bottom_right.y
-                    - document.canvas_bounds.top_left.y,
-                    0.0,
-                    None,
-                    circuit_common.GeometryStyle(
-                        circuit_common.SolidColorStyle(
-                            circuit_common.Color(0, 0, 0, 255)
-                        )
-                    ),
-                )
+            circuit_common.GeometryElement(
+                circuit_common.GeometryItemRectangleGeometry(
+                    circuit_common.RectangleGeometry(
+                        document.canvas_bounds.top_left.x,
+                        document.canvas_bounds.top_left.y,
+                        document.canvas_bounds.bottom_right.x
+                        - document.canvas_bounds.top_left.x,
+                        document.canvas_bounds.bottom_right.y
+                        - document.canvas_bounds.top_left.y,
+                        0.0,
+                        None,
+                        circuit_common.GeometryStyle(
+                            circuit_common.SolidColorStyle(
+                                circuit_common.Color(0, 0, 0, 255)
+                            )
+                        ),
+                    )
+                ),
+                circuit_common.GeometryFlags.BACKGROUND,
             )
         ] + [to_dark_theme(x) for x in geometry]
 
 
-def to_dark_theme(x: circuit_common.GeometryItem) -> circuit_common.GeometryItem:
+def to_dark_theme(x: circuit_common.GeometryElement) -> circuit_common.GeometryElement:
     # Convert both the stroke and fill styles, if present.
 
-    if hasattr(x.value, "stroke_style"):
-        x.value.stroke_style = style_to_dark(x.value.stroke_style)
+    if hasattr(x.geometry.value, "stroke_style"):
+        x.geometry.value.stroke_style = style_to_dark(x.geometry.value.stroke_style)
 
-    if hasattr(x.value, "fill_style"):
-        x.value.fill_style = style_to_dark(x.value.fill_style)
+    if hasattr(x.geometry.value, "fill_style"):
+        x.geometry.value.fill_style = style_to_dark(x.geometry.value.fill_style)
 
     return x
 
