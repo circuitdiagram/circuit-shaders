@@ -5,7 +5,7 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-mypy --explicit-package-bases ./src
+mypy ./src
 if [[ $? -ne 0 ]]; then
     exit 1
 fi

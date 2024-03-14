@@ -28,14 +28,9 @@ class GeometryShader(exports.GeometryShader):
 
 def adjust_geometry(geom: circuit_common.GeometryElement):
     if isinstance(geom.geometry, circuit_common.GeometryItemTextGeometry):
-        len1 = len(geom.geometry.value.text_runs)
         geom.geometry.value.text_runs = [
             x for run in geom.geometry.value.text_runs for x in format_text(run)
         ]
-        if len(geom.geometry.value.text_runs) != len1:
-            geom.geometry.value.fill_style = circuit_common.GeometryStyle(
-                circuit_common.SolidColorStyle(circuit_common.Color(255, 20, 20, 200))
-            )
     return geom
 
 
