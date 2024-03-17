@@ -1,7 +1,7 @@
 Circuit Shaders
 ===============
 
-_Circuit shaders_ are small programs that are run by [Circuit Diagram](https://www.circuit-diagram.org/)
+_Circuit shaders_ are small programs run by [Circuit Diagram](https://www.circuit-diagram.org/)
 to modify the appearance of a circuit.
 
 Some examples of what circuit shaders can do are:
@@ -18,11 +18,104 @@ time.
 
 ## Usage
 
-To be added.
+This repository is intended to be used for developing new shaders. To render circuits using existing shaders,
+use the Web Editor. You can also browse the available existing shaders in the
+[Shader Gallery](https://www.circuit-diagram.org/shaders).
+
+For developing new shaders please see the _Development_ section below.
 
 ## Development
 
-To be added.
+This section explains how to build and run shaders locally. These steps are designed to be followed
+in a Linux environment. If you are using Windows, you can use WSL for this. In the future, documentation
+may be added for other operating systems.
+
+### Setup
+
+Building shaders requires Python 3.11 or newer.
+
+```bash
+$ python3 --version
+Python 3.11.8
+```
+
+To set up the virtual environment and build the common shader dependencies, run `./setup.sh`. If your
+default Python version is older than 3.11, you will need to adjust the commands from this setup file
+and run them manually. For example, `python3.11 -m venv .venv` instead of `python3`.
+
+### Run
+
+Circuit shaders can be run in development by first building the Python script as a shader program, then
+executing the shader on a circuit using the _Circuit Diagram Shader Tool_.
+
+#### Step 1: Building the Shader
+
+Building involves compiling the shader into a WebAssembly module.
+
+Run the below command from the root of this repository to build a `shader.py` into a `shader.wasm` file:
+
+```bash
+# Change to the name of your shader
+$shader_name = "text_formatting"
+
+# Build shader module
+componentize-py -d wit/circuit-shader.wit -w circuit-shader componentize -p src/$shader_name shader -o build/$shader_name.wasm
+```
+
+#### Step 2: Create a Circuit
+
+To run the shader on a circuit, you will need to either create a circuit using the
+[Web Editor](https://www.circuit-diagram.org/editor/), or choose from one of the public circuits listed on
+[circuit-diagram.org](https://www.circuit-diagram.org/circuits).
+
+Copy the URL of the saved circuit as this will be required for the next step.
+
+For example: https://www.circuit-diagram.org/circuits/ea648c42
+
+#### Step 3: Download the Shader Tool
+
+Download the Circuit Diagram _Shader Tool_ from
+[circuit-diagram.org/downloads](https://www.circuit-diagram.org/downloads).
+
+Run the below command to check the shader tool is working:
+
+```bash
+$ ./cd-shader --help
+Circuit Diagram shader tool. (c) Circuit Diagram 2024.
+
+Usage: cd-shader run --circuit <CIRCUIT> --shader <FILE>... -o <PATH>
+...
+```
+
+Sign in to your Circuit Diagram account in the shader tool. If you don't have an account you can create one
+for free.
+
+```bash
+./cd-shader login
+```
+
+This will display a link to open in your browser. Open the link to connect the shader tool to your account.
+
+#### Step 4: Run the Shader
+
+This step will execute the shader and render the circuit as a PNG image.
+
+Please note that fetching the input circuit and rendering the final result are performed by the Circuit Diagram
+web service. This means that the _output_ of the shader is sent to Circuit Diagram for final rendering. However,
+the shader, and Python code used to build it, are only used locally.
+
+You can now run the shader tool to render the circuit:
+
+```bash
+# Replace the URL with the link to your circuit.
+./cd-shader run --circuit "https://www.circuit-diagram.org/circuits/ea648c42" \
+    --shader ./build/$shader_name.wasm -o ./circuit.png
+```
+
+You should now see an image called `circuit.png` in your working directory. If there were any errors running
+the shader, they will be printed to the console.
+
+### Python Packages
 
 When installing any new dependencies inside the Python virtual environment, run the below command to
 save these to the `requirements.txt` that can be checked into git.
