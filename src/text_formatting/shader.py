@@ -1,12 +1,12 @@
 from typing import List
 from circuit_shader import exports
 from circuit_shader.imports import circuit_common
-from pyparsing import Char, Group, Word, ZeroOrMore, nums, printables
+from pyparsing import Char, Group, Word, ZeroOrMore, alphanums, printables
 
 # Define grammar for formatted text
 plaintext = Word(printables + " ", exclude_chars="_")
-subscript1 = Group("_" + Char(nums)("subscript"))
-subscript2 = Group("_{" + Word(nums)("subscript") + "}")
+subscript1 = Group("_" + Char(alphanums)("subscript"))
+subscript2 = Group("_{" + Word(alphanums)("subscript") + "}")
 lone_underscore = "_"
 math_expr = ZeroOrMore(
     plaintext | subscript1 | subscript2 | lone_underscore

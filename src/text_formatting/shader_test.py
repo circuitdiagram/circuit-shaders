@@ -137,6 +137,34 @@ def test_subscript_4():
     )
 
 
+def test_subscript_5():
+    shader = GeometryShader()
+    result = shader.transform(DOCUMENT_NODE, generate_geometry("Some R_{example} Text"))
+
+    assert len(result) == 1
+
+    text_geometry = result[0].geometry.value
+    assert len(text_geometry.text_runs) == 3
+
+    assert text_geometry.text_runs[0].text == "Some R"
+    assert isinstance(
+        text_geometry.text_runs[0].formatting.formatting_type,
+        TextRunFormattingTypeNormal,
+    )
+
+    assert text_geometry.text_runs[1].text == "example"
+    assert isinstance(
+        text_geometry.text_runs[1].formatting.formatting_type,
+        TextRunFormattingTypeSubscript,
+    )
+
+    assert text_geometry.text_runs[2].text == " Text"
+    assert isinstance(
+        text_geometry.text_runs[2].formatting.formatting_type,
+        TextRunFormattingTypeNormal,
+    )
+
+
 def test_maintain_style():
     style = SolidColorStyle(Color(10, 20, 30, 255))
     shader = GeometryShader()
