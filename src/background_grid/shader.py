@@ -13,7 +13,7 @@ class GeometryShader(exports.GeometryShader):
         geometry: List[circuit_common.GeometryElement],
     ) -> List[circuit_common.GeometryElement]:
         # The `document` node is the top-level node. Continue until
-        # this node is reached to do all the color conversion at once.
+        # this node is reached to add the grid.
         if not isinstance(
             circuit_node.element,
             circuit_common.CircuitElementDocumentCircuitElement,
