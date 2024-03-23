@@ -13,8 +13,8 @@ Some examples of what circuit shaders can do are:
 - Change how connection points are rendered
 
 Circuit shaders are WebAssembly modules built on the WebAssembly Component Model. It is possible to write
-shaders in a variety of languages, but documentation is only provided for doing so using Python at this
-time.
+shaders in a variety of languages, but documentation is only provided for doing so using
+[Python](https://github.com/bytecodealliance/componentize-py) at this time.
 
 ## Usage
 
@@ -30,6 +30,11 @@ This section explains how to build and run shaders locally. These steps are desi
 in a Linux environment. If you are using Windows, you can use WSL for this. In the future, documentation
 may be added for other operating systems.
 
+Get started quickly with a pre-configured environment in GitHub Codespaces, or see the _Setup_ section for
+the manual setup instructions. When using Codespaces you can skip to the _Run_ instructions below.
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/circuitdiagram/circuit-shaders)
+
 ### Setup
 
 Building shaders requires Python 3.11 or newer.
@@ -39,7 +44,7 @@ $ python3 --version
 Python 3.11.8
 ```
 
-To set up the virtual environment and build the common shader dependencies, run `./setup.sh`. If your
+To set up the virtual environment and build the common shader dependencies, run `source ./setup.sh`. If your
 default Python version is older than 3.11, you will need to adjust the commands from this setup file
 and run them manually. For example, `python3.11 -m venv .venv` instead of `python3`.
 
@@ -76,6 +81,17 @@ For example: https://www.circuit-diagram.org/circuits/ea648c42
 
 Download the Circuit Diagram _Shader Tool_ from
 [circuit-diagram.org/downloads](https://www.circuit-diagram.org/downloads).
+
+> [!Tip]
+> Copy the download URL from the Downloads page above, then run the below command to download the file:
+> ```bash
+> curl -sLO <URL>
+> ```
+>
+> The download is normally a `.tar.xz` file. You can extract this with the below command:
+> ```bash
+> tar -xJf ./cd-shader.*.linux-x64.tar.xz && rm ./cd-shader.*.linux-x64.tar.xz
+> ```
 
 Run the below command to check the shader tool is working:
 
