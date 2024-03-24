@@ -60,11 +60,8 @@ Building involves compiling the shader into a WebAssembly module.
 Run the below command from the root of this repository to build a `shader.py` into a `shader.wasm` file:
 
 ```bash
-# Change to the name of your shader
-$shader_name = "text_formatting"
-
-# Build shader module
-componentize-py -d wit/circuit-shader.wit -w circuit-shader componentize -p src/$shader_name shader -o build/$shader_name.wasm
+# Change `dark_theme` to the name of your shader.
+./build.sh dark_theme
 ```
 
 #### Step 2: Create a Circuit
@@ -123,9 +120,9 @@ the shader, and Python code used to build it, are only used locally.
 You can now run the shader tool to render the circuit:
 
 ```bash
-# Replace the URL with the link to your circuit.
+# Replace the URL with the link to your circuit and `dark_theme` with the name of your shader.
 ./cd-shader run --circuit "https://www.circuit-diagram.org/circuits/ea648c42" \
-    --shader ./build/$shader_name.wasm -o ./circuit.png
+    --shader ./build/dark_theme.wasm -o ./circuit.png
 ```
 
 You should now see an image called `circuit.png` in your working directory. If there were any errors running
