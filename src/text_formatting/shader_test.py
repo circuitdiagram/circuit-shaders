@@ -1,4 +1,5 @@
 from circuit_shader.imports.circuit_common import (
+    CircuitDocumentMetadata,
     CircuitElementDocumentCircuitElement,
     CircuitNode,
     Color,
@@ -23,11 +24,13 @@ from text_formatting.shader import GeometryShader
 DOCUMENT_NODE = CircuitNode(
     CircuitElementDocumentCircuitElement(
         DocumentCircuitElement(
+            CircuitDocumentMetadata(None),
             LayoutRect(Point(0, 0), Point(10, 10)),
             LayoutRect(Point(0, 0), Point(10, 10)),
         )
     ),
     NodeEffects(None),
+    [],
 )
 
 
@@ -201,5 +204,6 @@ def generate_geometry(
                 )
             ),
             GeometryFlags(0),
+            [],
         )
     ]

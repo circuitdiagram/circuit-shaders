@@ -21,6 +21,7 @@ def test_replace_connection_geometry_with_square():
             ConnectionCircuitElement(Point(10, 10), True)
         ),
         NodeEffects(None),
+        [],
     )
     input_geometry = [
         GeometryElement(
@@ -28,6 +29,7 @@ def test_replace_connection_geometry_with_square():
                 EllipseGeometry(10, 10, 2, 2, None, None, None)
             ),
             GeometryFlags(0),
+            [],
         )
     ]
 
@@ -40,7 +42,7 @@ def test_replace_connection_geometry_with_square():
 
 def test_ignore_non_connection_elements():
     input_node = CircuitNode(
-        CircuitElementWireCircuitElement(WireCircuitElement([])), NodeEffects(None)
+        CircuitElementWireCircuitElement(WireCircuitElement([])), NodeEffects(None), []
     )
     input_geometry = [
         GeometryElement(
@@ -48,6 +50,7 @@ def test_ignore_non_connection_elements():
                 EllipseGeometry(10, 10, 2, 2, None, None, None)
             ),
             GeometryFlags(0),
+            [],
         )
     ]
 

@@ -74,4 +74,5 @@ def make_grid_line(
             )
         ),
         circuit_common.GeometryFlags.BACKGROUND,
+        [],
     )

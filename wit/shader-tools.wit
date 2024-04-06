@@ -1,0 +1,7 @@
+package circuit-diagram:shaders@0.1.0;
+
+interface shader-tools {
+  use circuit-common.{geometry-element, layout-rect};
+
+  measure-bounds: func(geometry: list<geometry-element>) -> option<layout-rect>;
+}

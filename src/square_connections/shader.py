@@ -40,6 +40,7 @@ class GeometryShader(exports.GeometryShader):
                     )
                 ),
                 circuit_common.GeometryFlags(0),
+                [],
             )
 
             # Render just the square. Any existing geometry associated with this

@@ -45,6 +45,7 @@ class GeometryShader(exports.GeometryShader):
                     )
                 ),
                 circuit_common.GeometryFlags.BACKGROUND,
+                [],
             )
         ] + [to_dark_theme(x) for x in geometry]
 

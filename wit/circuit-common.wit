@@ -1,4 +1,4 @@
-package circuit-diagram:shaders;
+package circuit-diagram:shaders@0.1.0;
 
 interface circuit-common {
 
@@ -21,11 +21,17 @@ interface circuit-common {
     a: u8,
   }
 
+  record layout-rect {
+    top-left: point,
+    bottom-right: point,
+  }
+
   /* Circuit */
 
   record circuit-node {
     element: circuit-element,
     effects: node-effects,
+    annotations: list<tuple<string, string>>,
   }
 
   record node-effects {
@@ -34,20 +40,24 @@ interface circuit-common {
 
   variant circuit-element {
     document-circuit-element(document-circuit-element),
-    group-circuit-element,
+    group-circuit-element(group-circuit-element),
     wire-circuit-element(wire-circuit-element),
     connection-circuit-element(connection-circuit-element),
     component-circuit-element(component-circuit-element),
   }
 
   record document-circuit-element {
+    metadata: circuit-document-metadata,
     canvas-bounds: layout-rect,
     content-bounds: layout-rect,
   }
 
-  record layout-rect {
-    top-left: point,
-    bottom-right: point,
+  record circuit-document-metadata {
+    title: option<string>
+  }
+
+  record group-circuit-element {
+    name: string,
   }
 
   record wire-circuit-element {
@@ -65,7 +75,9 @@ interface circuit-common {
   }
 
   record component-circuit-element {
-    layout: circuit-element-layout
+    layout: circuit-element-layout,
+    component-type: component-type,
+    properties: list<component-property>,
   }
 
   record circuit-element-layout {
@@ -74,11 +86,28 @@ interface circuit-common {
     orientation: orientation,
   }
 
+  record component-type {
+    collection: option<string>,
+    item: option<string>,
+  }
+
+  record component-property {
+    name: string,
+    value: component-property-value,
+  }
+
+  variant component-property-value {
+    string-value(string),
+    number-value(f64),
+    boolean-value(bool),
+  }
+
   /* Geometry */
 
   record geometry-element {
     geometry: geometry-item,
     modifiers: geometry-flags,
+    annotations: list<tuple<string, string>>,
   }
 
   variant geometry-item {
@@ -173,15 +202,4 @@ interface circuit-common {
   record solid-color-style {
     color: color
   }
-}
-
-interface geometry-shader {
-  use circuit-common.{circuit-node, geometry-element};
-
-  transform: func(circuit-node: circuit-node, geometry: list<geometry-element>) -> list<geometry-element>;
-}
-
-world circuit-shader {
-  import circuit-common;
-  export geometry-shader;
 }

@@ -1,0 +1,7 @@
+package circuit-diagram:shaders@0.1.0;
+
+interface geometry-shader {
+  use circuit-common.{circuit-node, geometry-element};
+
+  transform: func(circuit-node: circuit-node, geometry: list<geometry-element>) -> list<geometry-element>;
+}

@@ -1,0 +1,16 @@
+package circuit-diagram:shaders@0.1.0;
+
+world shader-utils {
+  import circuit-common;
+  import shader-tools;
+}
+
+world circuit-shader {
+  import circuit-common;
+  export geometry-shader;
+}
+
+world circuit-shader-with-utils {
+  include shader-utils;
+  include circuit-shader;
+}

@@ -13,7 +13,7 @@ build_shader() {
   if [[ -f "$filename" ]]; then  # Make sure it's a regular file
     echo "Building $shader_name"
 
-    componentize-py -d wit/circuit-shader.wit -w circuit-shader componentize -p src/$shader_name shader -o build/$shader_name.wasm
+    componentize-py -d wit/ -w circuit-shader componentize -p src/$shader_name shader -o build/$shader_name.wasm
     if [[ $? -ne 0 ]]; then
       echo "Error: failed to build $shader_name"
       exit 1
