@@ -26,9 +26,8 @@ For developing new shaders please see the _Development_ section below.
 
 ## Development
 
-This section explains how to build and run shaders locally. These steps are designed to be followed
-in a Linux environment. If you are using Windows, you can use WSL for this. In the future, documentation
-may be added for other operating systems.
+This section explains how to build and run shaders locally. These instructions are for Linux, but you can
+also use Windows or macOS.
 
 Get started quickly with a pre-configured environment in GitHub Codespaces, or see the _Setup_ section for
 the manual setup instructions. When using Codespaces you can skip to the _Run_ instructions below.
@@ -77,7 +76,14 @@ For example: https://www.circuit-diagram.org/circuits/ea648c42
 #### Step 3: Download the Shader Tool
 
 Download the Circuit Diagram _Shader Tool_ from
-[circuit-diagram.org/downloads](https://www.circuit-diagram.org/downloads).
+[circuit-diagram.org/downloads](https://www.circuit-diagram.org/downloads). This is available for the following
+platforms:
+
+- **Windows** x64
+- **Linux** x64
+- **macOS** Apple silicon
+
+Choose the appropriate download for your operating system.
 
 > [!Tip]
 > Copy the download URL from the Downloads page above, then run the below command to download the file:
